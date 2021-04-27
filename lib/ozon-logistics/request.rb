@@ -21,8 +21,7 @@ module OzonLogistics
     end
 
     def method_missing(method, *args)
-      # To support underscores, we replace them with hyphens when calling the API
-      @path_parts << method.to_s.gsub("_", "-").downcase
+      @path_parts << method.to_s.downcase
       @path_parts << args if args.length > 0
       @path_parts.flatten!
       self
