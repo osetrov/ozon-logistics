@@ -1,0 +1,16 @@
+defaults: &defaults
+  GRANT_TYPE: 'client_credentials'
+  CLIENT_ID: 'ApiTest_11111111-1111-1111-1111-111111111111'
+  CLIENT_SECRET: 'SRYksX3PBPUYj73A6cNqbQYRSaYNpjSodIMeWoSCQ8U='
+  URL_TOKEN: 'https://api-stg.ozonru.me/principal-auth-api/connect/token'
+  HOST: 'https://api-stg.ozonru.me/principal-integration-api'
+production:
+  <<: *defaults
+  URL_TOKEN: 'https://api.ozon.ru/principal-auth-api/connect/token'
+  HOST: 'https://api.ozon.ru/principal-integration-api'
+  CLIENT_ID: ''
+  CLIENT_SECRET: ''
+development:
+  <<: *defaults
+test:
+  <<: *defaults
