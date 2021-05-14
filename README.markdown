@@ -16,7 +16,7 @@ API wrapper для Ozon.Logistics [API](https://api-stg.ozonru.me/principal-inte
 
 Затем:
 
-    rails g ozon-logistics:install
+    rails g ozon_logistics:install
 
 ## Требования
 
@@ -304,4 +304,23 @@ params = {
 }
 response = OzonLogistics::Request.tracking.article.retrieve(params: params)
 article = response.body
+```
+
+### DropOff
+
+#### Метод создания завки на отгрузк
+```ruby
+body = {
+  "orderIds": [
+    0
+  ]
+}
+response = OzonLogistics::Request.dropoff.create(body: body).body
+drop_off_id = response[:id]
+```
+
+#### Метод для для получения акта по ID заявки на отгрузку
+```ruby
+response = OzonLogistics::Request.dropoff(drop_off_id).act
+p response.body
 ```

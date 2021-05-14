@@ -6,7 +6,6 @@ require 'ozon-logistics/response'
 
 module OzonLogistics
   class << self
-
     def generate_access_token(client_id=OzonLogistics.client_id, client_secret=OzonLogistics.client_secret, grant_type=OzonLogistics.grant_type)
       response = Faraday.post(OzonLogistics.url_token, "grant_type=#{grant_type}&client_id=#{client_id}&client_secret=#{client_secret}")
       JSON.parse(response.body)
