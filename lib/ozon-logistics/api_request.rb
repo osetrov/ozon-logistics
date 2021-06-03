@@ -5,7 +5,7 @@ module OzonLogistics
       @request_builder = builder
     end
 
-    def post(params: nil, headers: nil, body: {})
+    def post(params: nil, headers: nil, body: {}, first_time: true)
       validate_access_token
 
       begin
@@ -14,11 +14,15 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
+        if e.response[:status] == 401 && first_time
+          OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
+          self.post(params: params, headers: headers, body: body, first_time: false)
+        end
         handle_error(e)
       end
     end
 
-    def patch(params: nil, headers: nil, body: {})
+    def patch(params: nil, headers: nil, body: {}, first_time: true)
       validate_access_token
 
       begin
@@ -28,11 +32,15 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
+        if e.response[:status] == 401 && first_time
+          OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
+          self.patch(params: params, headers: headers, body: body, first_time: false)
+        end
         handle_error(e)
       end
     end
 
-    def put(params: nil, headers: nil, body: {})
+    def put(params: nil, headers: nil, body: {}, first_time: true)
       validate_access_token
 
       begin
@@ -41,11 +49,15 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
+        if e.response[:status] == 401 && first_time
+          OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
+          self.put(params: params, headers: headers, body: body, first_time: false)
+        end
         handle_error(e)
       end
     end
 
-    def get(params: nil, headers: nil)
+    def get(params: nil, headers: nil, first_time: true)
       validate_access_token
 
       begin
@@ -54,11 +66,15 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
+        if e.response[:status] == 401 && first_time
+          OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
+          self.get(params: params, headers: headers, first_time: false)
+        end
         handle_error(e)
       end
     end
 
-    def delete(params: nil, headers: nil)
+    def delete(params: nil, headers: nil, first_time: true)
       validate_access_token
 
       begin
@@ -67,6 +83,10 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
+        if e.response[:status] == 401 && first_time
+          OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
+          self.delete(params: params, headers: headers, first_time: false)
+        end
         handle_error(e)
       end
     end
