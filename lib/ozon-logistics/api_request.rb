@@ -17,8 +17,9 @@ module OzonLogistics
         if e.response[:status] == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.post(params: params, headers: headers, body: body, first_time: false)
+        else
+          handle_error(e)
         end
-        handle_error(e)
       end
     end
 
@@ -35,8 +36,9 @@ module OzonLogistics
         if e.response[:status] == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.patch(params: params, headers: headers, body: body, first_time: false)
+        else
+          handle_error(e)
         end
-        handle_error(e)
       end
     end
 
@@ -52,8 +54,9 @@ module OzonLogistics
         if e.response[:status] == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.put(params: params, headers: headers, body: body, first_time: false)
+        else
+          handle_error(e)
         end
-        handle_error(e)
       end
     end
 
@@ -69,8 +72,9 @@ module OzonLogistics
         if e.response[:status] == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.get(params: params, headers: headers, first_time: false)
+        else
+          handle_error(e)
         end
-        handle_error(e)
       end
     end
 
@@ -86,8 +90,9 @@ module OzonLogistics
         if e.response[:status] == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.delete(params: params, headers: headers, first_time: false)
+        else
+          handle_error(e)
         end
-        handle_error(e)
       end
     end
 
