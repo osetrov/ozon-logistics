@@ -14,7 +14,7 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
-        if e.response.dig(:status) == 401 && first_time
+        if e.response.dig(:status_code) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.post(params: params, headers: headers, body: body, first_time: false)
         else
@@ -33,7 +33,7 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
-        if e.response.dig(:status)== 401 && first_time
+        if e.response.dig(:status_code)== 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.patch(params: params, headers: headers, body: body, first_time: false)
         else
@@ -51,7 +51,7 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
-        if e.response.dig(:status) == 401 && first_time
+        if e.response.dig(:status_code) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.put(params: params, headers: headers, body: body, first_time: false)
         else
@@ -69,7 +69,7 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
-        if e.response.dig(:status) == 401 && first_time
+        if e.response.dig(:status_code) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.get(params: params, headers: headers, first_time: false)
         else
@@ -87,7 +87,7 @@ module OzonLogistics
         end
         parse_response(response)
       rescue => e
-        if e.response.dig(:status) == 401 && first_time
+        if e.response.dig(:status_code) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.delete(params: params, headers: headers, first_time: false)
         else
