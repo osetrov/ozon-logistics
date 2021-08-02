@@ -163,7 +163,7 @@ module OzonLogistics
       if request
         request.params.merge!(params) if params
         request.headers['Content-Type'] = 'application/json'
-        request.headers['Authorization'] = "Bearer #{self.access_token}"
+        request.headers['Authorization'] = "Bearer #{OzonLogistics::Request.access_token}"
         request.headers.merge!(headers) if headers
         request.body = body if body
         request.options.timeout = self.timeout
