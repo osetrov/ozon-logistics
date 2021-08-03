@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ozon-logistics'
-  s.version     = '0.0.11'
+  s.version     = '0.0.12'
   s.date        = '2021-04-27'
   s.summary     = "Ozon logistics"
   s.description = ""
