@@ -201,7 +201,7 @@ module OzonLogistics
     end
 
     def validate_access_token
-      unless self.access_token && self.api_endpoint
+      unless self.access_token
         raise OzonLogistics::OzonLogisticsError, "You must set an access_token prior to making a call"
       end
     end
