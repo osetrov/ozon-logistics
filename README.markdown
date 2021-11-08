@@ -160,6 +160,10 @@ amount = response.body[:amount]
 ```ruby
 body = {
   orderNumber: '1',
+  firstMileTransfer: {
+    type: 'DropOff',
+    fromPlaceId: OzonLogistics.from_places.to_s
+  },
   buyer: {
     name: 'Павел',
     phone: '+71234567890',
@@ -203,6 +207,19 @@ body = {
 response = OzonLogistics::Request.order.create(body: body)
 order = response[:data]
 ```
+
+### Shipment
+#### Метод создания заявки на отгрузку на складе OZON
+```ruby
+body = {
+  orderIds: [
+    order_id
+  ]
+}
+response = OzonLogistics::Request.shipmentRequest.create(body: body)
+result = response.body
+```
+
 ### Tariff
 #### Получение списка тарифов 
 ```ruby

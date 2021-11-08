@@ -21,7 +21,7 @@ module OzonLogistics
     end
 
     def method_missing(method, *args)
-      @path_parts << method.to_s.downcase
+      @path_parts << method.to_s
       @path_parts << args if args.length > 0
       @path_parts.flatten!
       self

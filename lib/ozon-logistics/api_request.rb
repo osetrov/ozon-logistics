@@ -13,7 +13,7 @@ module OzonLogistics
           configure_request(request: request, params: params, headers: headers, body: MultiJson.dump(body))
         end
         parse_response(response)
-      rescue => e
+      rescue StandardError => e
         if e.response.dig(:status) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.post(params: params, headers: headers, body: body, first_time: false)
@@ -32,8 +32,8 @@ module OzonLogistics
           configure_request(request: request, params: params, headers: headers, body: MultiJson.dump(body))
         end
         parse_response(response)
-      rescue => e
-        if e.response.dig(:status)== 401 && first_time
+      rescue StandardError => e
+        if e.response.dig(:status) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.patch(params: params, headers: headers, body: body, first_time: false)
         else
@@ -50,7 +50,7 @@ module OzonLogistics
           configure_request(request: request, params: params, headers: headers, body: MultiJson.dump(body))
         end
         parse_response(response)
-      rescue => e
+      rescue StandardError => e
         if e.response.dig(:status) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.put(params: params, headers: headers, body: body, first_time: false)
@@ -68,7 +68,7 @@ module OzonLogistics
           configure_request(request: request, params: params, headers: headers)
         end
         parse_response(response)
-      rescue => e
+      rescue StandardError => e
         if e.response.dig(:status) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.get(params: params, headers: headers, first_time: false)
@@ -86,7 +86,7 @@ module OzonLogistics
           configure_request(request: request, params: params, headers: headers)
         end
         parse_response(response)
-      rescue => e
+      rescue StandardError => e
         if e.response.dig(:status) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.delete(params: params, headers: headers, first_time: false)
@@ -163,7 +163,8 @@ module OzonLogistics
       if request
         request.params.merge!(params) if params
         request.headers['Content-Type'] = 'application/json'
-        request.headers['Authorization'] = "Bearer #{self.access_token}"
+        request.headers['Authorization'] = "Bearer #{OzonLogistics::Request.access_token}"
+        request.headers['User-Agent'] = "OzonLogistics/#{OzonLogistics::VERSION} Ruby gem"
         request.headers.merge!(headers) if headers
         request.body = body if body
         request.options.timeout = self.timeout
@@ -201,8 +202,7 @@ module OzonLogistics
     end
 
     def validate_access_token
-      access_token = self.access_token
-      unless access_token && (access_token["-"] || self.api_endpoint)
+      unless self.access_token
         raise OzonLogistics::OzonLogisticsError, "You must set an access_token prior to making a call"
       end
     end

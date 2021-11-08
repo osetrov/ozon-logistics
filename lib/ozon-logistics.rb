@@ -3,6 +3,7 @@ require 'ozon-logistics/ozon_error'
 require 'ozon-logistics/request'
 require 'ozon-logistics/api_request'
 require 'ozon-logistics/response'
+require 'ozon-logistics/version'
 
 module OzonLogistics
   class << self
