@@ -14,7 +14,7 @@ module OzonLogistics
         end
         parse_response(response)
       rescue StandardError => e
-        if e.response.dig(:status) == 401 && first_time
+        if e.response.try(:dig, :status) == 401 && first_time
           OzonLogistics::Request.access_token = OzonLogistics.generate_access_token.try(:dig, "access_token")
           self.post(params: params, headers: headers, body: body, first_time: false)
         else

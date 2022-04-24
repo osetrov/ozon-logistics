@@ -1,3 +1,4 @@
+require 'faraday'
 require 'ozon-logistics/ozon_logistics_error'
 require 'ozon-logistics/ozon_error'
 require 'ozon-logistics/request'
